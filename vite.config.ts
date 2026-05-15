@@ -3,10 +3,11 @@ import tailwindcss from "@tailwindcss/vite";
 import tsConfigPaths from "vite-tsconfig-paths";
 import react from "@vitejs/plugin-react";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import { cloudflare } from "@cloudflare/vite-plugin";
 
-// SSR entry is `src/server.ts` - configured for Vercel deployment
+// SSR entry is `src/server.ts` (Worker fetch + error wrapper). Cloudflare plugin runs on build only.
 export default defineConfig(async (env) => {
-  const { mode } = env;
+  const { command, mode } = env;
 
   const envDefine: Record<string, string> = {};
   const loadedEnv = loadEnv(mode, process.cwd(), "VITE_");
@@ -38,6 +39,13 @@ export default defineConfig(async (env) => {
     plugins: [
       tailwindcss(),
       tsConfigPaths({ projects: ["./tsconfig.json"] }),
+      ...(command === "build"
+        ? [
+            cloudflare({
+              viteEnvironment: { name: "ssr" },
+            }),
+          ]
+        : []),
       ...tanstackStart({
         importProtection: {
           behavior: "error",
@@ -46,10 +54,7 @@ export default defineConfig(async (env) => {
             specifiers: ["server-only"],
           },
         },
-        server: { 
-          entry: "server",
-          preset: "vercel",
-        },
+        server: { entry: "server" },
       }),
       react(),
     ],
