@@ -46,8 +46,8 @@ export default defineConfig(async (env) => {
             specifiers: ["server-only"],
           },
         },
-        server: { entry: "server" },
-        deployment: {
+        server: { 
+          entry: "server",
           preset: "vercel",
         },
       }),
