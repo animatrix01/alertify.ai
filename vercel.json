@@ -1,10 +1,19 @@
 {
   "buildCommand": "npm run build",
   "installCommand": "npm install",
-  "rewrites": [
+  "outputDirectory": "dist/client",
+  "routes": [
     {
-      "source": "/(.*)",
-      "destination": "/api/index"
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|ico|webmanifest|mp3|woff|woff2|ttf|eot))",
+      "dest": "/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/index"
     }
   ]
 }
