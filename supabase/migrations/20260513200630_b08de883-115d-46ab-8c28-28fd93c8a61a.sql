@@ -1,0 +1,1 @@
+drop policy if exists "SOS images public read" on storage.objects;

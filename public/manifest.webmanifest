@@ -1,0 +1,10 @@
+{
+  "name": "Alertify.ai",
+  "short_name": "Alertify",
+  "description": "AI-powered real-time disaster alerts and emergency response",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#dc2626",
+  "icons": []
+}
